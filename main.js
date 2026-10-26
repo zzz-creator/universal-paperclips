@@ -5566,11 +5566,18 @@ for(var i=0; i < activeProjects.length; i++){
 
 function load() {
     
-    var loadGame = JSON.parse(localStorage.getItem("saveGame"));
-    var loadProjectsUses = JSON.parse(localStorage.getItem("saveProjectsUses"));
-    var loadProjectsFlags = JSON.parse(localStorage.getItem("saveProjectsFlags"));
-    var loadProjectsActive = JSON.parse(localStorage.getItem("saveProjectsActive"));
-    var loadStratsActive = JSON.parse(localStorage.getItem("saveStratsActive"));
+    var loadGame, loadProjectsUses, loadProjectsFlags, loadProjectsActive, loadStratsActive;
+    try {
+        loadGame = JSON.parse(localStorage.getItem("saveGame"));
+        loadProjectsUses = JSON.parse(localStorage.getItem("saveProjectsUses"));
+        loadProjectsFlags = JSON.parse(localStorage.getItem("saveProjectsFlags"));
+        loadProjectsActive = JSON.parse(localStorage.getItem("saveProjectsActive"));
+        loadStratsActive = JSON.parse(localStorage.getItem("saveStratsActive"));
+    } catch (e) {
+        alert("Save data is corrupt or unreadable. Keeping current state.");
+        return;
+    }
+    if (!loadGame) { alert("No save data found."); return; }
     
     for(var i=0; i < allStrats.length; i++){
     
@@ -5873,11 +5880,18 @@ function load() {
 
 function load1() {
     
-    var loadGame = JSON.parse(localStorage.getItem("saveGame1"));
-    var loadProjectsUses = JSON.parse(localStorage.getItem("saveProjectsUses1"));
-    var loadProjectsFlags = JSON.parse(localStorage.getItem("saveProjectsFlags1"));
-    var loadProjectsActive = JSON.parse(localStorage.getItem("saveProjectsActive1"));
-    var loadStratsActive = JSON.parse(localStorage.getItem("saveStratsActive1"));
+    var loadGame, loadProjectsUses, loadProjectsFlags, loadProjectsActive, loadStratsActive;
+    try {
+        loadGame = JSON.parse(localStorage.getItem("saveGame1"));
+        loadProjectsUses = JSON.parse(localStorage.getItem("saveProjectsUses1"));
+        loadProjectsFlags = JSON.parse(localStorage.getItem("saveProjectsFlags1"));
+        loadProjectsActive = JSON.parse(localStorage.getItem("saveProjectsActive1"));
+        loadStratsActive = JSON.parse(localStorage.getItem("saveStratsActive1"));
+    } catch (e) {
+        alert("Save data is corrupt or unreadable. Keeping current state.");
+        return;
+    }
+    if (!loadGame) { alert("No save data found."); return; }
     
     
     for(var i=0; i < projects.length; i++){
@@ -6177,11 +6191,18 @@ function load1() {
 
 function load2() {
     
-    var loadGame = JSON.parse(localStorage.getItem("saveGame2"));
-    var loadProjectsUses = JSON.parse(localStorage.getItem("saveProjectsUses2"));
-    var loadProjectsFlags = JSON.parse(localStorage.getItem("saveProjectsFlags2"));
-    var loadProjectsActive = JSON.parse(localStorage.getItem("saveProjectsActive2"));
-    var loadStratsActive = JSON.parse(localStorage.getItem("saveStratsActive2"));
+    var loadGame, loadProjectsUses, loadProjectsFlags, loadProjectsActive, loadStratsActive;
+    try {
+        loadGame = JSON.parse(localStorage.getItem("saveGame2"));
+        loadProjectsUses = JSON.parse(localStorage.getItem("saveProjectsUses2"));
+        loadProjectsFlags = JSON.parse(localStorage.getItem("saveProjectsFlags2"));
+        loadProjectsActive = JSON.parse(localStorage.getItem("saveProjectsActive2"));
+        loadStratsActive = JSON.parse(localStorage.getItem("saveStratsActive2"));
+    } catch (e) {
+        alert("Save data is corrupt or unreadable. Keeping current state.");
+        return;
+    }
+    if (!loadGame) { alert("No save data found."); return; }
     
     
     for(var i=0; i < projects.length; i++){
@@ -6492,7 +6513,14 @@ function reset() {
 
 function loadPrestige() {
     
-        var loadPrestige = JSON.parse(localStorage.getItem("savePrestige"));
+        var loadPrestige;
+        try {
+            loadPrestige = JSON.parse(localStorage.getItem("savePrestige"));
+        } catch (e) {
+            alert("Prestige save data is corrupt or unreadable.");
+            return;
+        }
+        if (!loadPrestige) { return; }
         
         prestigeU = loadPrestige.prestigeU;
         prestigeS = loadPrestige.prestigeS;
