@@ -120,8 +120,17 @@ var configToGlobal = {
 var _origSetCfg = setCfg;
 setCfg = function(path, val) {
     var ok = _origSetCfg(path, val);
-    if (ok && configToGlobal[path]) {
-        window[configToGlobal[path]] = cfg(path);
+    if (ok) {
+        if (configToGlobal[path]) {
+            window[configToGlobal[path]] = cfg(path);
+        }
+        // re-apply cached init values so edits take effect immediately
+        if (path === 'advanced.giftPeriod') { giftCountdown = cfg(path); }
+        if (path === 'advanced.wireSupply') { wireSupply = cfg(path); }
+        // refresh displays if available
+        if (typeof refresh === 'function') { try { refresh(); } catch(e) {} }
+        if (typeof updateUpgrades === 'function') { try { updateUpgrades(); } catch(e) {} }
+        if (typeof updatePower === 'function') { try { updatePower(); } catch(e) {} }
     }
     return ok;
 };
