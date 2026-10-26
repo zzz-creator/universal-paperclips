@@ -12,3 +12,4 @@ Run after any change to game logic.
 8. Prestige (universe reset). Page reloads, prestigeU increments.
 9. Check large numbers format with suffixes (no raw 1e+54 in UI).
 10. No debug menu visible without password.
+11. Projects panel renders all 96 projects; buying one fires its effect and removes the button.
