@@ -1,4 +1,4 @@
-// CONFIG (tunable constants) ---------------------------------------
+﻿// CONFIG (tunable constants) ---------------------------------------
 // Versioned, runtime-mutable in sandbox mode. Normal mode uses defaults.
 var config = {
     schemaVersion: 1,
@@ -93,7 +93,22 @@ var configToGlobal = {
     'advanced.giftPeriod': 'giftPeriod',
     'advanced.synchCost': 'synchCost',
     'advanced.threnodyCost': 'threnodyCost',
-    'advanced.entertainCost': 'entertainCost'
+    'advanced.entertainCost': 'entertainCost',
+    'advanced.clipperBoostMult': 'clipperBoost',
+    'advanced.factoryBoostMult': 'factoryBoost',
+    'advanced.droneBoostMult': 'droneBoost',
+    'advanced.megaClipperBoostMult': 'megaClipperBoost',
+    'advanced.creativitySpeedMult': 'creativitySpeed',
+    'advanced.marketingEffectivenessMult': 'marketingEffectiveness',
+    'advanced.demandBoostMult': 'demandBoost',
+    'advanced.trustFlagMult': 'trustFlag',
+    'advanced.nextTrustBase': 'nextTrust',
+    'advanced.maxTrustBase': 'maxTrust',
+    'advanced.maxTrustCostBase': 'maxTrustCost',
+    'advanced.wireBasePriceBase': 'wireBasePrice',
+    'advanced.qChipCostBase': 'qChipCost',
+    'advanced.bribeBase': 'bribe',
+    'advanced.opFadeDelayBase': 'opFadeDelay'
 };
 
 // Live-apply: update the backing global when a config value changes
@@ -173,3 +188,4 @@ function isCfgModified(path) {
         }
     } catch(e) {}
 })();
+

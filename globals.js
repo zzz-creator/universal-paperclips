@@ -1,4 +1,4 @@
-var clips = 0;
+﻿var clips = 0;
 var unusedClips = 0;
 var clipRate = 0;
 var clipRateTemp = 0;
@@ -28,9 +28,9 @@ var processors = 1;
 var memory = 1;
 var operations = 0;
 var trust = 2;
-var nextTrust = 3000;
+var nextTrust = config.advanced.nextTrustBase;
 var transaction = 1;
-var clipperBoost = 1;
+var clipperBoost = config.advanced.clipperBoostMult;
 var blinkCounter = 0;
 var creativity = 0;
 var creativityOn = false;
@@ -38,7 +38,7 @@ var safetyProjectOn = false;
 var boostLvl = 0;
 var wirePurchase = 0;
 var wireSupply = config.advanced.wireSupply;
-var marketingEffectiveness = 1;
+var marketingEffectiveness = config.advanced.marketingEffectivenessMult;
 var milestoneFlag = 0;
 var bankroll = 0;
 var fib1 = 2;
@@ -52,13 +52,13 @@ var autoClipperFlag = 0;
 var megaClipperFlag = 0;
 var megaClipperCost = config.basic.megaClipperCost;
 var megaClipperLevel = 0;
-var megaClipperBoost = 1;
-var creativitySpeed = 1;
+var megaClipperBoost = config.advanced.megaClipperBoostMult;
+var creativitySpeed = config.advanced.creativitySpeedMult;
 var creativityCounter = 0;
 var wireBuyerFlag = 0;
-var demandBoost = 1;
+var demandBoost = config.advanced.demandBoostMult;
 var humanFlag = 1;
-var trustFlag = 1;
+var trustFlag = config.advanced.trustFlagMult;
 var nanoWire = 0;
 var creationFlag = 0;
 var wireProductionFlag = 0;
@@ -67,8 +67,8 @@ var factoryFlag = 0;
 var harvesterFlag = 0;
 var wireDroneFlag = 0;
 var factoryLevel = 0;
-var factoryBoost = 1;
-var droneBoost = 1;
+var factoryBoost = config.advanced.factoryBoostMult;
+var droneBoost = config.advanced.droneBoostMult;
 var availableMatter = Math.pow(10, 24)*6000;
 var acquiredMatter = 0;
 var processedMatter = 0;
@@ -88,9 +88,9 @@ var totalMatter = Math.pow(10, 54)*30;
 var foundMatter = availableMatter;
 var qFlag = 0;
 var qClock = 0;
-var qChipCost = 10000;
+var qChipCost = config.advanced.qChipCostBase;
 var nextQchip = 0;
-var bribe = 1000000;
+var bribe = config.advanced.bribeBase;
 var battleFlag = 0;
 
 var prestigeU = 0;
@@ -101,7 +101,7 @@ var egoFlag = 0;
 var tothFlag = 0;
 
 var wirePriceCounter = 0;
-var wireBasePrice = 20;
+var wireBasePrice = config.advanced.wireBasePriceBase;
 
 var farmRate = config.advanced.farmRate;
 var batterySize = config.advanced.batterySize;
@@ -126,8 +126,8 @@ var giftCountdown = giftPeriod;
 var elapsedTime = 0;
 
 var honor = 0;
-var maxTrust = 20;
-var maxTrustCost = 91117.99;
+var maxTrust = config.advanced.maxTrustBase;
+var maxTrustCost = config.advanced.maxTrustCostBase;
 var disorgCounter = 0;
 var disorgFlag = 0;
 var synchCost = config.advanced.synchCost;
@@ -150,7 +150,7 @@ var standardOps = 0;
 var opFade = 0;
 
 var opFadeTimer = 0;
-var opFadeDelay = 800;
+var opFadeDelay = config.advanced.opFadeDelayBase;
 
 var dismantle = 0;
 var endTimer1 = 0;
@@ -168,6 +168,7 @@ var finalClips = 0;
 var resetFlag = 2;
 var threnodyAudio = new Audio();
 var threnodyLoadedBool = false; 
+
 
 
 
