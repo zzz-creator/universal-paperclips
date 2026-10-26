@@ -692,6 +692,49 @@ var tourneyResultsElements = [];
 
 cacheDOMElements();
 
+// Build projects from data-driven projects_data.js
+function buildProjects() {
+    if (typeof projectsData === 'undefined') return;
+    projects = [];
+    activeProjects = [];
+    for (var i = 0; i < projectsData.length; i++) {
+        var d = projectsData[i];
+        var proj = {
+            id: d.id,
+            title: d.title,
+            priceTag: d.priceTag,
+            description: d.description,
+            trigger: null,
+            uses: d.uses,
+            cost: null,
+            flag: d.flag,
+            element: null,
+            effect: null
+        };
+        // compile trigger (returns boolean)
+        var tBody = d.trigger.replace(/^function\s*\([^)]*\)\s*\{/, '').replace(/\}$/, '').trim();
+        if (!/^return\b/.test(tBody)) tBody = 'return ' + tBody;
+        proj.trigger = new Function('project', tBody);
+        proj.trigger = proj.trigger.bind(null, proj);
+        // compile cost (returns boolean)
+        var cBody = d.cost.replace(/^function\s*\([^)]*\)\s*\{/, '').replace(/\}$/, '').trim();
+        if (!/^return\b/.test(cBody)) cBody = 'return ' + cBody;
+        proj.cost = new Function('project', cBody);
+        proj.cost = proj.cost.bind(null, proj);
+        // compile effect (statements); rewrite projectN. -> project.
+        var eBody = d.effect.replace(/^function\s*\([^)]*\)\s*\{/, '').replace(/\}$/, '');
+        eBody = eBody.replace(/project\d+\./g, 'project.');
+        proj.effect = new Function('project', eBody);
+        proj.effect = proj.effect.bind(null, proj);
+        // bind element (DOM ready)
+        proj.element = document.getElementById(proj.id);
+        // expose global alias so cross-project references resolve
+        if (d.globalName) { window[d.globalName] = proj; }
+        projects.push(proj);
+    }
+}
+buildProjects();
+
 // Wire --------------------------------------------------------
 
 function adjustWirePrice(){

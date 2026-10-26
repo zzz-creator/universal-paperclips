@@ -161,6 +161,8 @@ var endTimer5 = 0;
 var endTimer6 = 0;
 
 var testFlag = 0;
+var projects = [];
+var activeProjects = [];
 var finalClips = 0;
 
 var resetFlag = 2;
