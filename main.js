@@ -312,6 +312,7 @@ function cacheDOMElements(){
     probesLostHazardsDisplayElement =   document.getElementById('probesLostHazardsDisplay');
     probesTotalDisplayElement =         document.getElementById('probesTotalDisplay');
     probesLostDriftDisplayElement =     document.getElementById('probesLostDriftDisplay');
+    alignmentValueElement =             document.getElementById('alignmentValue');
     probesTotalDisplayElement =         document.getElementById('probesTotalDisplay');
     drifterCountElement =               document.getElementById('drifterCount');
     mapsElement =                       document.getElementById('maps');
@@ -505,6 +506,7 @@ var colonizedDisplayElement;
 var probesLostHazardsDisplayElement;
 var probesTotalDisplayElement;
 var probesLostDriftDisplayElement;
+var alignmentValueElement;
 var probesTotalDisplayElement;
 var drifterCountElement;
 var mapsElement;
@@ -2710,7 +2712,8 @@ function updateSwarm(){
         swarmGifts = swarmGifts + nextGift;
         swarmGiftsElement.innerHTML = formatWithCommas(swarmGifts, 0);
         if (milestoneFlag<15){
-            displayMessage("The swarm has generated a gift of "+nextGift+" additional computational capacity");
+            var _giftFlavor = (sliderPos > 100) ? "insight" : "industry";
+            displayMessage("The swarm has generated a gift of "+nextGift+" additional computational capacity ("+_giftFlavor+")");
             }
         
 //        THE OLD WAY        
@@ -4079,6 +4082,11 @@ function drift(){
     probesLostDrift = probesLostDrift + amount;
 
     probesLostDriftDisplayElement.innerHTML = spellf(probesLostDrift);
+    if (alignmentValueElement) {
+        var _total = probeCount + probesLostDrift;
+        var _align = _total > 0 ? Math.max(0, Math.round((1 - probesLostDrift / _total) * 100)) : 100;
+        alignmentValueElement.innerHTML = _align;
+    }
     probesTotalDisplayElement.innerHTML = spellf(probeCount);
     drifterCountElement.innerHTML = spellf(drifterCount);
     
@@ -4977,7 +4985,8 @@ for(var i=0; i < activeProjects.length; i++){
         probeTrustCost: probeTrustCost,
         probeLaunchLevel: probeLaunchLevel,
         probeCost: probeCost,
-        lastTick: Date.now()
+        lastTick: Date.now(),
+        schemaVersion: 1
     
         }
     
@@ -5267,7 +5276,8 @@ for(var i=0; i < activeProjects.length; i++){
         probeTrustCost: probeTrustCost,
         probeLaunchLevel: probeLaunchLevel,
         probeCost: probeCost,
-        lastTick: Date.now()
+        lastTick: Date.now(),
+        schemaVersion: 1
     
         }
     
@@ -5557,7 +5567,8 @@ for(var i=0; i < activeProjects.length; i++){
         probeTrustCost: probeTrustCost,
         probeLaunchLevel: probeLaunchLevel,
         probeCost: probeCost,
-        lastTick: Date.now()
+        lastTick: Date.now(),
+        schemaVersion: 1
     
         }
     
@@ -5583,6 +5594,9 @@ function load() {
         return;
     }
     if (!loadGame) { alert("No save data found."); return; }
+
+    // Schema migration: older saves without schemaVersion are v1
+    if (!loadGame.schemaVersion) { loadGame.schemaVersion = 1; }
 
     // Offline catch-up: replay up to 60 seconds of ticks
     if (loadGame.lastTick) {
@@ -5905,6 +5919,9 @@ function load1() {
     }
     if (!loadGame) { alert("No save data found."); return; }
 
+    // Schema migration: older saves without schemaVersion are v1
+    if (!loadGame.schemaVersion) { loadGame.schemaVersion = 1; }
+
     // Offline catch-up: replay up to 60 seconds of ticks
     if (loadGame.lastTick) {
         var elapsed = Date.now() - loadGame.lastTick;
@@ -6222,6 +6239,9 @@ function load2() {
         return;
     }
     if (!loadGame) { alert("No save data found."); return; }
+
+    // Schema migration: older saves without schemaVersion are v1
+    if (!loadGame.schemaVersion) { loadGame.schemaVersion = 1; }
 
     // Offline catch-up: replay up to 60 seconds of ticks
     if (loadGame.lastTick) {
