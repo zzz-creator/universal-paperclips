@@ -63,6 +63,25 @@
 
 <body>
 
+    <div id="modeChoiceOverlay" style="position:fixed;inset:0;background:#111;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;font-family:sans-serif;">
+        <h2>Universal Paperclips</h2>
+        <p>Choose a mode:</p>
+        <button onclick="chooseMode('normal')" style="margin:6px;padding:10px 20px;cursor:pointer;">Normal Mode</button>
+        <button onclick="chooseMode('sandbox')" style="margin:6px;padding:10px 20px;cursor:pointer;">Sandbox Mode</button>
+    </div>
+    <script>
+        function chooseMode(mode) {
+            sessionStorage.setItem('upMode', mode);
+            document.getElementById('modeChoiceOverlay').style.display = 'none';
+            window.upSandbox = (mode === 'sandbox');
+        }
+        (function(){
+            var m = sessionStorage.getItem('upMode');
+            if (m) { window.upSandbox = (m === 'sandbox'); document.getElementById('modeChoiceOverlay').style.display = 'none'; }
+            else { window.upSandbox = false; }
+        })();
+    </script>
+
     <!--     <audio id="threnody1">
         <source src="test.mp3" type="audio/mpeg">
         
@@ -400,6 +419,22 @@
 
 
 
+
+        <div id="sandboxPanel" style="display:none; border:1px solid #666; padding:10px; margin:10px 0;">
+            <b>Sandbox (config)</b><br />
+            <div id="sandboxBasic"></div>
+            <div id="sandboxAdvanced" style="display:none;"></div>
+            <button onclick="toggleSandboxAdvanced()">Toggle Advanced</button>
+            <button onclick="saveSandboxConfig()">Save Sandbox Config</button>
+            <button onclick="resetAllSandbox()">Reset All</button>
+        </div>
+        <script>
+            function isSandbox() { return !!window.upSandbox; }
+            function toggleSandboxAdvanced() {
+                var el = document.getElementById('sandboxAdvanced');
+                el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            }
+        </script>
 
         </div>
 
@@ -989,8 +1024,10 @@
 
         </div>
         <script type="text/javascript" src="combat.js?v3"></script>
+        <script type="text/javascript" src="config.js?v3"></script>
         <script type="text/javascript" src="globals.js?v3"></script>
         <script type="text/javascript" src="projects_data.js?v3"></script>
+        <script type="text/javascript" src="sandbox.js?v3"></script>
         <script type="text/javascript" src="main.js?v3"></script>
 
 </body>
