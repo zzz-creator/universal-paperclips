@@ -17,4 +17,9 @@ Mitigation applied this pass:
 - try/catch guards around JSON.parse (prior pass).
 - Offline catch-up capped at 60s ticks, gated on lastTick.
 
-Consolidation (full 6->1 function merge) deferred: ~900 lines of duplicated restore logic; recommend a dedicated refactor session with a round-trip smoke test first.
+Consolidation (this pass):
+- save() now accepts `slot` param; save1()/save2() delegate to save("1")/save("2").
+- load() now accepts `slot` param; load1()/load2() delegate to load("1")/load("2").
+- All localStorage keys parameterized by slot.
+- Single copy of the saveGame object literal and the restore body remains.
+- Round-trip smoke test: see SMOKE.md (save → reload → diff values).
