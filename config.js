@@ -108,7 +108,12 @@ var configToGlobal = {
     'advanced.wireBasePriceBase': 'wireBasePrice',
     'advanced.qChipCostBase': 'qChipCost',
     'advanced.bribeBase': 'bribe',
-    'advanced.opFadeDelayBase': 'opFadeDelay'
+    'advanced.opFadeDelayBase': 'opFadeDelay',
+    'advanced.riskinessBase': 'riskiness',
+    'advanced.maxPortBase': 'maxPort',
+    'advanced.investUpgradeCostBase': 'investUpgradeCost',
+    'advanced.tourneyCostBase': 'tourneyCost',
+    'advanced.yomiBoostBase': 'yomiBoost'
 };
 
 // Live-apply: update the backing global when a config value changes
@@ -188,4 +193,6 @@ function isCfgModified(path) {
         }
     } catch(e) {}
 })();
+
+
 

@@ -1475,11 +1475,11 @@ var stockID = 0;
 var secTotal = 0;
 var portTotal = 0;
 var sellDelay = 0;
-var riskiness = 5;
-var maxPort = 5;
+var riskiness = config.advanced.riskinessBase;
+var maxPort = config.advanced.maxPortBase;
 var m = 0;
 var investLevel = 0;
-var investUpgradeCost = 100;
+var investUpgradeCost = config.advanced.investUpgradeCostBase;
 var stockGainThreshold = .5;
 var ledger = 0;
 var stockReportCounter = 0;
@@ -1732,7 +1732,7 @@ if (portfolioSize>0 && humanFlag == 1){
 
 //-------------------STRATEGY-----------------------------------------------------
 
-var tourneyCost = 1000;
+var tourneyCost = config.advanced.tourneyCostBase;
 var tourneyLvl = 1;
 var choiceANames = ["cooperate", "swerve", "macro", "fight", "bet", "raise_price", "opera", "go", "heads", "particle", "discrete", "peace", "search", "lead", "accept", "accept", "attack"]; 
 var choiceBNames = ["defect", "straight", "micro", "back_down", "fold", "lower_price", "football", "stay", "tails", "wave", "continuous", "war", "evaluate", "follow", "reject", "deny", "decay"];
@@ -1756,7 +1756,7 @@ var showScore = 0;
 var high = 0;
 var pick = 10;
 var yomi = 0;
-var yomiBoost = 1;
+var yomiBoost = config.advanced.yomiBoostBase;
 
 var allStrats = [];
 var strats = [];
@@ -5416,5 +5416,6 @@ function importSave(event) {
     reader.readAsText(file);
     event.target.value = "";
 }
+
 
 
