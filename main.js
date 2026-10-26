@@ -4561,7 +4561,7 @@ var saveTimer = 0;
 var secTimer = 0;
 
 
-window.setInterval(function(){
+function tick() {
     
     // Wire Price Fluctuation
     
@@ -4596,7 +4596,9 @@ window.setInterval(function(){
     }
     
     
-}, 100);
+}
+
+window.setInterval(tick, 100);
      
 
 // Saving and Loading
@@ -4974,7 +4976,8 @@ for(var i=0; i < activeProjects.length; i++){
         probeUsedTrust: probeUsedTrust,
         probeTrustCost: probeTrustCost,
         probeLaunchLevel: probeLaunchLevel,
-        probeCost: probeCost
+        probeCost: probeCost,
+        lastTick: Date.now()
     
         }
     
@@ -5263,7 +5266,8 @@ for(var i=0; i < activeProjects.length; i++){
         probeUsedTrust: probeUsedTrust,
         probeTrustCost: probeTrustCost,
         probeLaunchLevel: probeLaunchLevel,
-        probeCost: probeCost
+        probeCost: probeCost,
+        lastTick: Date.now()
     
         }
     
@@ -5552,7 +5556,8 @@ for(var i=0; i < activeProjects.length; i++){
         probeUsedTrust: probeUsedTrust,
         probeTrustCost: probeTrustCost,
         probeLaunchLevel: probeLaunchLevel,
-        probeCost: probeCost
+        probeCost: probeCost,
+        lastTick: Date.now()
     
         }
     
@@ -5578,6 +5583,13 @@ function load() {
         return;
     }
     if (!loadGame) { alert("No save data found."); return; }
+
+    // Offline catch-up: replay up to 60 seconds of ticks
+    if (loadGame.lastTick) {
+        var elapsed = Date.now() - loadGame.lastTick;
+        var catchupTicks = Math.min(Math.floor(elapsed / 100), 600);
+        for (var _ct = 0; _ct < catchupTicks; _ct++) { tick(); }
+    }
     
     for(var i=0; i < allStrats.length; i++){
     
@@ -5892,6 +5904,13 @@ function load1() {
         return;
     }
     if (!loadGame) { alert("No save data found."); return; }
+
+    // Offline catch-up: replay up to 60 seconds of ticks
+    if (loadGame.lastTick) {
+        var elapsed = Date.now() - loadGame.lastTick;
+        var catchupTicks = Math.min(Math.floor(elapsed / 100), 600);
+        for (var _ct = 0; _ct < catchupTicks; _ct++) { tick(); }
+    }
     
     
     for(var i=0; i < projects.length; i++){
@@ -6203,6 +6222,13 @@ function load2() {
         return;
     }
     if (!loadGame) { alert("No save data found."); return; }
+
+    // Offline catch-up: replay up to 60 seconds of ticks
+    if (loadGame.lastTick) {
+        var elapsed = Date.now() - loadGame.lastTick;
+        var catchupTicks = Math.min(Math.floor(elapsed / 100), 600);
+        for (var _ct = 0; _ct < catchupTicks; _ct++) { tick(); }
+    }
     
     
     for(var i=0; i < projects.length; i++){
