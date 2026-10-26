@@ -71,6 +71,41 @@ var configBounds = {
 // Defaults snapshot for reset
 var configDefaults = JSON.parse(JSON.stringify(config));
 
+// Map config path -> global variable name (for live apply in sandbox)
+var configToGlobal = {
+    'basic.clipperCost': 'clipperCost',
+    'basic.wireCost': 'wireCost',
+    'basic.adCost': 'adCost',
+    'basic.marginStart': 'margin',
+    'basic.demandStart': 'demand',
+    'basic.marketingLvlStart': 'marketingLvl',
+    'basic.megaClipperCost': 'megaClipperCost',
+    'basic.factoryCost': 'factoryCost',
+    'basic.harvesterCost': 'harvesterCost',
+    'basic.wireDroneCost': 'wireDroneCost',
+    'basic.farmCost': 'farmCost',
+    'basic.batteryCost': 'batteryCost',
+    'advanced.wireSupply': 'wireSupply',
+    'advanced.farmRate': 'farmRate',
+    'advanced.batterySize': 'batterySize',
+    'advanced.factoryPowerRate': 'factoryPowerRate',
+    'advanced.dronePowerRate': 'dronePowerRate',
+    'advanced.giftPeriod': 'giftPeriod',
+    'advanced.synchCost': 'synchCost',
+    'advanced.threnodyCost': 'threnodyCost',
+    'advanced.entertainCost': 'entertainCost'
+};
+
+// Live-apply: update the backing global when a config value changes
+var _origSetCfg = setCfg;
+setCfg = function(path, val) {
+    var ok = _origSetCfg(path, val);
+    if (ok && configToGlobal[path]) {
+        window[configToGlobal[path]] = cfg(path);
+    }
+    return ok;
+};
+
 // Migration shim
 if (!config.schemaVersion) { config.schemaVersion = 1; }
 
@@ -116,3 +151,25 @@ function isCfgModified(path) {
     for (var i = 0; i < parts.length; i++) { cur = cur[parts[i]]; def = def[parts[i]]; }
     return cur !== def;
 }
+
+// Merge saved sandbox config at load (sandbox mode only)
+(function() {
+    if (typeof window === 'undefined') return;
+    var isSb = false;
+    try { isSb = (sessionStorage.getItem('upMode') === 'sandbox'); } catch(e) {}
+    if (!isSb) return;
+    var raw = null;
+    try { raw = localStorage.getItem('sandboxConfig'); } catch(e) {}
+    if (!raw) return;
+    try {
+        var saved = JSON.parse(raw);
+        for (var tier in saved) {
+            if (tier === 'schemaVersion') continue;
+            if (config[tier]) {
+                for (var k in saved[tier]) {
+                    setCfg(tier + '.' + k, saved[tier][k]);
+                }
+            }
+        }
+    } catch(e) {}
+})();
