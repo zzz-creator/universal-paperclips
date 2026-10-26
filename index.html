@@ -68,13 +68,17 @@
         <p>Choose a mode:</p>
         <button onclick="chooseMode('normal')" style="margin:6px;padding:10px 20px;cursor:pointer;">Normal Mode</button>
         <button onclick="chooseMode('sandbox')" style="margin:6px;padding:10px 20px;cursor:pointer;">Sandbox Mode</button>
-        <button onclick="window.location.href='reverse.html'" style="margin:6px;padding:10px 20px;cursor:pointer;">Reverse Mode</button>
+        <button onclick="sessionStorage.removeItem('upMode'); window.location.href='reverse.html'" style="margin:6px;padding:10px 20px;cursor:pointer;">Reverse Mode</button>
     </div>
     <script>
         function chooseMode(mode) {
             sessionStorage.setItem('upMode', mode);
             document.getElementById('modeChoiceOverlay').style.display = 'none';
             window.upSandbox = (mode === 'sandbox');
+        }
+        function changeMode() {
+            sessionStorage.removeItem('upMode');
+            window.location.reload();
         }
         (function(){
             var m = sessionStorage.getItem('upMode');
@@ -130,7 +134,8 @@
 
         <div id="leftColumn">
 
-            <button class="button2" id="btnMakePaperclip" onclick="clipClick(1)">Make Paperclip</button><br />
+            <button style="margin-bottom:8px;" onclick="changeMode()">Change Mode</button><br />
+<button class="button2" id="btnMakePaperclip" onclick="clipClick(1)">Make Paperclip</button><br />
             <br />
 
             <div id="creationDiv">

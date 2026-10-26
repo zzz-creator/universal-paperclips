@@ -138,6 +138,11 @@ function loadReverse() {
     }
 }
 
+function backToMenu() {
+    sessionStorage.removeItem('upMode');
+    window.location.href = 'index.html';
+}
+
 function resetReverse() {
     if (!confirm('Reset reverse mode?')) return;
     info = 0; humanRes = 10; morale = 50; maxProgress = 0; turn = 0;
