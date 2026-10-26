@@ -6550,4 +6550,36 @@ function loadPrestige() {
         
         prestigeU = loadPrestige.prestigeU;
         prestigeS = loadPrestige.prestigeS;
-}    
+}
+
+function exportSave() {
+    var data = localStorage.getItem("saveGame");
+    if (!data) { alert("No save data to export."); return; }
+    var blob = new Blob([data], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "universal-paperclips-save.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function importSave(event) {
+    var file = event.target.files[0];
+    if (!file) { return; }
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        try {
+            var parsed = JSON.parse(e.target.result);
+            localStorage.setItem("saveGame", JSON.stringify(parsed));
+            alert("Save imported. Reloading...");
+            location.reload();
+        } catch (err) {
+            alert("Import failed: file is not valid save data.");
+        }
+    };
+    reader.readAsText(file);
+    event.target.value = "";
+}

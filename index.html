@@ -369,6 +369,9 @@
             <button id ="save2Button" onclick="save2()">SAVE SLOT 2</button>
             <button id ="load2Button" onclick="load2()">LOAD SLOT 2</button><br />    
             <button id ="resetButton" onclick="reset()">RESET ALL PROGRESS</button><br />
+            <button id ="exportButton" onclick="exportSave()">EXPORT SAVE</button>
+            <button id ="importButton" onclick="document.getElementById('importFile').click()">IMPORT SAVE</button>
+            <input type="file" id="importFile" style="display:none" onchange="importSave(event)" />
         </div>
 
         <button id="toggleSaveButton" onclick="toggleSaveMenuAccess()" style="background-color: #444; padding: 5px 10px; cursor: pointer; margin-bottom: 10px;">🔒 Save/Load Game</button><br />       
